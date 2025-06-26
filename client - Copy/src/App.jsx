@@ -2,9 +2,6 @@ import './App.css'
 import { Routes, Route, Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-// Hardcoded API URL for Render deployment
-const API_URL = 'https://yoga-mern.onrender.com';
-
 function Navbar() {
   const isLoggedIn = !!localStorage.getItem('token');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -130,7 +127,7 @@ function CategoryPoses() {
   useEffect(() => {
     setLoading(true);
     setError('');
-    fetch(`${API_URL}/api/poses`)
+    fetch('http://localhost:5000/api/poses')
       .then(res => res.json())
       .then(data => {
         setPoses(Array.isArray(data) ? data.filter(p => p.category?.toLowerCase() === category.toLowerCase()) : []);
@@ -167,7 +164,7 @@ function Login() {
     setMessage('');
     setIsLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/login`, {
+      const res = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -278,7 +275,7 @@ function Register() {
     setMessage('');
     setIsLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/register`, {
+      const res = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -542,7 +539,7 @@ function AdminRegister() {
     setMessage('');
     setIsLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/admin/register`, {
+      const res = await fetch('http://localhost:5000/api/admin/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -652,7 +649,7 @@ function AdminLogin() {
     setMessage('');
     setIsLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/admin/login`, {
+      const res = await fetch('http://localhost:5000/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -796,7 +793,7 @@ function AdminDashboard() {
     setLoadingPoses(true);
     setPoseError('');
     try {
-      const res = await fetch(`${API_URL}/api/poses`);
+      const res = await fetch('http://localhost:5000/api/poses');
       const data = await res.json();
       setPoses(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -810,7 +807,7 @@ function AdminDashboard() {
     setLoadingUsers(true);
     setUserError('');
     try {
-      const res = await fetch(`${API_URL}/api/users`, {
+      const res = await fetch('http://localhost:5000/api/users', {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
@@ -833,7 +830,7 @@ function AdminDashboard() {
   const handleAddPose = async (pose) => {
     setPoseError('');
     try {
-      const res = await fetch(`${API_URL}/api/poses`, {
+      const res = await fetch('http://localhost:5000/api/poses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -853,7 +850,7 @@ function AdminDashboard() {
   const handleEditPose = async (pose) => {
     setPoseError('');
     try {
-      const res = await fetch(`${API_URL}/api/poses/${pose._id}`, {
+      const res = await fetch(`http://localhost:5000/api/poses/${pose._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -875,7 +872,7 @@ function AdminDashboard() {
     setPoseError('');
     if (!window.confirm('Delete this pose?')) return;
     try {
-      const res = await fetch(`${API_URL}/api/poses/${id}`, {
+      const res = await fetch(`http://localhost:5000/api/poses/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -892,7 +889,7 @@ function AdminDashboard() {
   const handleAddUser = async (user) => {
     setUserError('');
     try {
-      const res = await fetch(`${API_URL}/api/users`, {
+      const res = await fetch('http://localhost:5000/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -912,7 +909,7 @@ function AdminDashboard() {
   const handleEditUser = async (user) => {
     setUserError('');
     try {
-      const res = await fetch(`${API_URL}/api/users/${user._id}`, {
+      const res = await fetch(`http://localhost:5000/api/users/${user._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -934,7 +931,7 @@ function AdminDashboard() {
     setUserError('');
     if (!window.confirm('Delete this user?')) return;
     try {
-      const res = await fetch(`${API_URL}/api/users/${id}`, {
+      const res = await fetch(`http://localhost:5000/api/users/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -1186,7 +1183,7 @@ function HomepageWithPosePreviews() {
   useEffect(() => {
     setLoading(true);
     setError('');
-    fetch(`${API_URL}/api/poses`)
+    fetch('http://localhost:5000/api/poses')
       .then(res => res.json())
       .then(data => {
         setPoses(Array.isArray(data) ? data : []);
